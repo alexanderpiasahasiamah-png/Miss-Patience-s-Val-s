@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Valentine Surprise</title>
+<style>
+  body {
+    font-family: 'Arial', sans-serif;
+    text-align: center;
+    background-color: #ffe6e6;
+    overflow: hidden;
+    padding: 50px;
+  }
+
+  #welcome {
+    font-size: 2em;
+    margin-bottom: 30px;
+  }
+
+  #envelope {
+    font-size: 1.5em;
+    cursor: pointer;
+    display: inline-block;
+    margin-top: 20px;
+    padding: 20px;
+    border: 2px solid #ff4d4d;
+    border-radius: 10px;
+    background-color: #fff0f0;
+    transition: transform 0.3s;
+  }
+
+  #envelope:hover {
+    transform: scale(1.1);
+  }
+
+  #messagePage {
+    display: none;
+    margin-top: 50px;
+  }
+
+  #giftBtn {
+    margin-top: 20px;
+    padding: 15px 30px;
+    font-size: 1.2em;
+    border: none;
+    border-radius: 8px;
+    background-color: #ff4d4d;
+    color: white;
+    cursor: pointer;
+  }
+
+  #giftContainer img {
+    width: 200px;
+    margin-top: 20px;
+    display: none;
+    border-radius: 10px;
+    box-shadow: 0 0 10px #ff4d4d;
+  }
+
+  /* Floating hearts */
+  .heart {
+    position: absolute;
+    font-size: 24px;
+    color: #ff4d4d;
+    animation: float 5s linear infinite;
+    opacity: 0.8;
+  }
+
+  @keyframes float {
+    0% { transform: translateY(100vh) rotate(0deg); opacity:0.8;}
+    50% { opacity:1; }
+    100% { transform: translateY(-10vh) rotate(360deg); opacity:0; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Background music -->
+<audio id="bgMusic" src="your-music.mp3" loop></audio>
+
+<div id="homePage">
+  <div id="welcome">Welcome Miss Boateng! 💌</div>
+  <div id="envelope">📩 Click on me</div>
+</div>
+
+<div id="messagePage">
+  <p>This is from the most handsome boy you’ve ever seen, Alexander 💖</p>
+  <p>I know you didn’t get anything this Valentine’s from anyone. Although I am broke, this is what I can gift you with.</p>
+  <button id="giftBtn">Tap Gift</button>
+  <div id="giftContainer">
+    <img src="gift1.jpg" alt="Gift 1">
+    <img src="gift2.jpg" alt="Gift 2">
+    <img src="gift3.jpg" alt="Gift 3">
+    <img src="gift4.jpg" alt="Gift 4">
+  </div>
+</div>
+
+<script>
+  const envelope = document.getElementById('envelope');
+  const homePage = document.getElementById('homePage');
+  const messagePage = document.getElementById('messagePage');
+  const giftBtn = document.getElementById('giftBtn');
+  const gifts = document.querySelectorAll('#giftContainer img');
+  const bgMusic = document.getElementById('bgMusic');
+
+  // Start music when envelope clicked
+  envelope.addEventListener('click', () => {
+    homePage.style.display = 'none';
+    messagePage.style.display = 'block';
+    bgMusic.play();
+    createHearts();
+  });
+
+  // Show gifts one by one with fade
+  giftBtn.addEventListener('click', () => {
+    let i = 0;
+    const showGifts = setInterval(() => {
+      if (i > 0) gifts[i - 1].style.display = 'none';
+      if (i < gifts.length) {
+        gifts[i].style.display = 'block';
+        i++;
+      } else {
+        clearInterval(showGifts);
+      }
+    }, 800);
+  });
+
+  // Create floating hearts
+  function createHearts() {
+    setInterval(() => {
+      const heart = document.createElement('div');
+      heart.className = 'heart';
+      heart.style.left = Math.random() * window.innerWidth + 'px';
+      heart.style.fontSize = (20 + Math.random() * 30) + 'px';
+      heart.textContent = '❤️';
+      document.body.appendChild(heart);
+      setTimeout(() => heart.remove(), 5000);
+    }, 300);
+  }
+</script>
+
+</body>
+</html>
